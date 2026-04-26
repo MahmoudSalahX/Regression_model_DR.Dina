@@ -19,9 +19,18 @@ st.write("Enter the weather conditions below to predict the interstate traffic v
 
 # User inputs tailored to your specific dataset
 col1, col2 = st.columns(2)
+# 1. Change the label and the default value to Celsius
 with col1: 
-    # temp is usually recorded in Kelvin in these standard datasets
-    feature_1 = st.number_input("Temperature", value=290.0) 
+    feature_1_celsius = st.number_input("Temperature (°C)", value=20.0) 
+
+if st.button("Predict Traffic Volume"):
+    # 2. Convert the Celsius input to Kelvin before predicting
+    feature_1_kelvin = feature_1_celsius + 273.15
+    
+    # Use the converted Kelvin value in your array
+    raw_input = np.array([[feature_1_kelvin, feature_2]])
+    
+    # ... the rest of the code stays exactly the same
 with col2: 
     # clouds_all is a percentage from 0 to 100
     feature_2 = st.number_input("Cloud Cover (%)", value=50.0) 

@@ -19,31 +19,29 @@ st.write("Enter the weather conditions below to predict the interstate traffic v
 
 # User inputs tailored to your specific dataset
 col1, col2 = st.columns(2)
-# 1. Change the label and the default value to Celsius
+
+# Column 1: Temperature
 with col1: 
     feature_1_celsius = st.number_input("Temperature (°C)", value=20.0) 
 
-if st.button("Predict Traffic Volume"):
-    # 2. Convert the Celsius input to Kelvin before predicting
-    feature_1_kelvin = feature_1_celsius + 273.15
-    
-    # Use the converted Kelvin value in your array
-    raw_input = np.array([[feature_1_kelvin, feature_2]])
-    
-    # ... the rest of the code stays exactly the same
+# Column 2: Cloud Cover
 with col2: 
-    # clouds_all is a percentage from 0 to 100
     feature_2 = st.number_input("Cloud Cover (%)", value=50.0) 
 
+# ONLY ONE BUTTON
 if st.button("Predict Traffic Volume"):
-    # Create the input array
-    raw_input = np.array([[feature_1, feature_2]])
     
-    # Scale the input using the Kaggle training metrics
+    # 1. Convert the Celsius input to Kelvin before predicting
+    feature_1_kelvin = feature_1_celsius + 273.15
+    
+    # 2. Create the input array using Kelvin and Cloud Cover
+    raw_input = np.array([[feature_1_kelvin, feature_2]])
+    
+    # 3. Scale the input using the Kaggle training metrics
     scaled_input = (raw_input - scaler_mean) / scaler_scale
     
-    # Predict
+    # 4. Predict
     prediction = model.predict(scaled_input)
     
-    # Output formatted as an integer since vehicles are whole numbers
+    # 5. Output formatted as an integer since vehicles are whole numbers
     st.success(f"Predicted Traffic Volume: {int(prediction[0][0])} vehicles")
